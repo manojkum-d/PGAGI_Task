@@ -20,6 +20,7 @@ import {
 import { columns, users } from "../lib/data";
 // import { capitalize } from "../lib/utils";
 import { PlusIcon, SearchIcon, VerticalDotsIcon } from "./icons/icons";
+import Link from "next/link";
 
 const INITIAL_VISIBLE_COLUMNS = ["name", "actions"];
 
@@ -138,13 +139,15 @@ export default function CampaignTable() {
             onClear={() => setFilterValue("")}
             onValueChange={onSearchChange}
           />
-          <Button
-            className="bg-foreground text-background"
-            endContent={<PlusIcon />}
-            size="sm"
-          >
-            Add New
-          </Button>
+          <Link href="/campaign/add-campaign">
+            <Button
+              className="bg-foreground text-background"
+              endContent={<PlusIcon />}
+              size="sm"
+            >
+              Add New
+            </Button>
+          </Link>
         </div>
         <div className="flex justify-between items-center">
           <span className="text-default-400 text-small">

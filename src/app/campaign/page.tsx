@@ -1,7 +1,7 @@
 import Campaign_table from "@/components/Campaign_table";
 import React from "react";
 
-export default function page() {
+export default function campaign() {
   return (
     <div className="container mx-auto p-4 max-w-[45%] mt-10">
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
