@@ -1,136 +1,76 @@
 "use client";
 import React, { useState } from "react";
-import { Tabs, Tab, Input, Button, Card, CardBody } from "@nextui-org/react";
+import { Tabs, Tab, Card, CardBody } from "@nextui-org/react";
+import TabForm from "@/components/component/TabForm";
+import { tabsData, TabData, TabField } from "../../../lib/campaignData";
 
-export default function page() {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [selected, setSelected] = useState<string | number>("campaign-name");
+type FormData = {
+  [key: string]: { [field: string]: string };
+};
+
+export default function CampaignTabs() {
+  const [selected, setSelected] = useState<string>("campaign-name");
+  const [enabledTabs, setEnabledTabs] = useState<string[]>(["campaign-name"]);
+  const [formData, setFormData] = useState<FormData>(
+    tabsData.reduce((acc: any, tab: any) => {
+      acc[tab.key] = tab.fields.reduce((fieldAcc: any, field: any) => {
+        fieldAcc[field.field] = "";
+        return fieldAcc;
+      }, {} as { [field: string]: string });
+      return acc;
+    }, {} as FormData)
+  );
+
+  const handleSave = (tabKey: string, nextTabKey: string) => {
+    if (!enabledTabs.includes(nextTabKey)) {
+      setEnabledTabs([...enabledTabs, nextTabKey]);
+    }
+    setSelected(nextTabKey);
+  };
+
+  const handleInputChange = (tabKey: string, field: string, value: string) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [tabKey]: {
+        ...prevData[tabKey],
+        [field]: value,
+      },
+    }));
+  };
+
   return (
-    <>
-      <div className="container mx-auto p-4 max-w-[50%] mt-10">
-        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-          Add Campaigns
-        </h1>
-      </div>
-      <div className="flex flex-col w-full items-center justify-center mt-10">
-        <Card className="max-w-[90%] h-[90%]">
-          <CardBody className="overflow-hidden">
-            <Tabs
-              fullWidth
-              size="md"
-              aria-label="Campaign Tabs"
-              selectedKey={selected}
-              onSelectionChange={setSelected}
-            >
-              <Tab key="campaign-name" title="Campaign Name">
-                <form className="flex flex-col gap-4">
-                  <Input
-                    isRequired
-                    label="Campaign Name"
-                    placeholder="Enter campaign name"
-                  />
-                  <div className="flex gap-2 justify-end">
-                    <Button fullWidth color="primary">
-                      Save
-                    </Button>
-                  </div>
-                </form>
+    <div className="flex flex-col mx-auto p-4 max-w-[80%] m-4 items-center justify-center">
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+        Add New Campaign
+      </h1>
+      <Card className="max-w-full w-fit h-fit mt-10">
+        <CardBody className="overflow-hidden">
+          <Tabs
+            fullWidth
+            size="md"
+            aria-label="Campaign Tabs"
+            selectedKey={selected}
+            onSelectionChange={(key) => setSelected(key as string)}
+          >
+            {tabsData.map((tab) => (
+              <Tab
+                key={tab.key}
+                title={tab.title}
+                isDisabled={!enabledTabs.includes(tab.key)}
+              >
+                <TabForm
+                  tab={tab}
+                  formData={formData[tab.key]}
+                  handleInputChange={(field, value) =>
+                    handleInputChange(tab.key, field, value)
+                  }
+                  handleSave={() => handleSave(tab.key, tab.nextKey)}
+                />
               </Tab>
-              <Tab key="language-voice" title="Language & Voice">
-                <form className="flex flex-col gap-4">
-                  <Input
-                    isRequired
-                    label="Language"
-                    placeholder="Enter language"
-                  />
-                  <Input isRequired label="Voice" placeholder="Enter voice" />
-                  <div className="flex gap-2 justify-end">
-                    <Button fullWidth color="primary">
-                      Save
-                    </Button>
-                  </div>
-                </form>
-              </Tab>
-              <Tab key="script" title="Script">
-                <form className="flex flex-col gap-4">
-                  <Input isRequired label="Script" placeholder="Enter script" />
-                  <div className="flex gap-2 justify-end">
-                    <Button fullWidth color="primary">
-                      Save
-                    </Button>
-                  </div>
-                </form>
-              </Tab>
-              <Tab key="knowledge-base" title="Knowledge Base">
-                <form className="flex flex-col gap-4">
-                  <Input
-                    isRequired
-                    label="Knowledge Base"
-                    placeholder="Enter knowledge base"
-                  />
-                  <div className="flex gap-2 justify-end">
-                    <Button fullWidth color="primary">
-                      Save
-                    </Button>
-                  </div>
-                </form>
-              </Tab>
-              <Tab key="purpose" title="Purpose">
-                <form className="flex flex-col gap-4">
-                  <Input
-                    isRequired
-                    label="Purpose"
-                    placeholder="Enter purpose"
-                  />
-                  <div className="flex gap-2 justify-end">
-                    <Button fullWidth color="primary">
-                      Save
-                    </Button>
-                  </div>
-                </form>
-              </Tab>
-              <Tab key="details" title="Details">
-                <form className="flex flex-col gap-4">
-                  <Input
-                    isRequired
-                    label="Details"
-                    placeholder="Enter details"
-                  />
-                  <div className="flex gap-2 justify-end">
-                    <Button fullWidth color="primary">
-                      Save
-                    </Button>
-                  </div>
-                </form>
-              </Tab>
-              <Tab key="post-call-analysis" title="Post Call Analysis">
-                <form className="flex flex-col gap-4">
-                  <Input
-                    isRequired
-                    label="Post Call Analysis"
-                    placeholder="Enter post call analysis"
-                  />
-                  <div className="flex gap-2 justify-end">
-                    <Button fullWidth color="primary">
-                      Save
-                    </Button>
-                  </div>
-                </form>
-              </Tab>
-              <Tab key="review" title="Review">
-                <form className="flex flex-col gap-4">
-                  <Input isRequired label="Review" placeholder="Enter review" />
-                  <div className="flex gap-2 justify-end">
-                    <Button fullWidth color="primary">
-                      Save
-                    </Button>
-                  </div>
-                </form>
-              </Tab>
-            </Tabs>
-          </CardBody>
-        </Card>
-      </div>
-    </>
+            ))}
+          </Tabs>
+        </CardBody>
+      </Card>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-import Campaign_table from "@/components/Campaign_table";
+import Campaign_table from "@/components/Campaign_list_table";
 import React from "react";
 
 export default function campaign() {
