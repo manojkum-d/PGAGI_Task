@@ -1,4 +1,3 @@
-// data.ts
 export type TabField = {
   label: string;
   placeholder: string;
@@ -6,6 +5,7 @@ export type TabField = {
   field: string;
   defaultValue?: string;
   errorMessage?: string;
+  required?: boolean;
 };
 
 export type TabData = {
@@ -26,6 +26,7 @@ export const tabsData: TabData[] = [
         placeholder: "Enter campaign name",
         type: "text",
         field: "campaignName",
+        required: true,
       },
     ],
   },
@@ -39,12 +40,14 @@ export const tabsData: TabData[] = [
         placeholder: "Select language",
         type: "dropdown",
         field: "language",
+        required: true,
       },
       {
         label: "Voice",
         placeholder: "Select voice",
         type: "dropdown",
         field: "voice",
+        required: true,
       },
     ],
   },
@@ -60,6 +63,7 @@ export const tabsData: TabData[] = [
         field: "script",
         defaultValue: "",
         errorMessage: "Enter the Script.",
+        required: true,
       },
     ],
   },
@@ -70,9 +74,10 @@ export const tabsData: TabData[] = [
     fields: [
       {
         label: "Knowledge Base",
-        placeholder: "Enter knowledge base",
-        type: "file",
+        placeholder: "Enter knowledge base URL",
+        type: "text",
         field: "knowledgeBase",
+        required: true,
       },
     ],
   },
@@ -86,6 +91,7 @@ export const tabsData: TabData[] = [
         placeholder: "Enter purpose",
         type: "text",
         field: "purpose",
+        required: true,
       },
     ],
   },
@@ -95,10 +101,18 @@ export const tabsData: TabData[] = [
     nextKey: "post-call-analysis",
     fields: [
       {
-        label: "Details",
-        placeholder: "Enter details",
+        label: "Enter the First Line",
+        placeholder: "First line...",
         type: "text",
-        field: "details",
+        field: "firstLine",
+        required: true,
+      },
+      {
+        label: "Tone",
+        placeholder: "Tone...",
+        type: "text",
+        field: "tone",
+        required: true,
       },
     ],
   },
@@ -106,26 +120,12 @@ export const tabsData: TabData[] = [
     key: "post-call-analysis",
     title: "Post Call Analysis",
     nextKey: "review",
-    fields: [
-      {
-        label: "Post Call Analysis",
-        placeholder: "Enter post call analysis",
-        type: "text",
-        field: "postCallAnalysis",
-      },
-    ],
+    fields: [],
   },
   {
     key: "review",
     title: "Review",
     nextKey: "",
-    fields: [
-      {
-        label: "Review",
-        placeholder: "Enter review",
-        type: "text",
-        field: "review",
-      },
-    ],
+    fields: [], // No fields needed, just display collected data
   },
 ];

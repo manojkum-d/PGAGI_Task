@@ -20,12 +20,13 @@ const TextareaInput: React.FC<TextareaInputProps> = ({
   return (
     <Textarea
       isInvalid={!value}
-      variant="flat"
+      variant="faded"
       isRequired
       label={label}
       placeholder={placeholder}
       defaultValue={defaultValue}
       value={value}
+      description="Enter a concise script"
       onChange={(e) => onChange(e.target.value)}
       errorMessage={errorMessage}
     />
