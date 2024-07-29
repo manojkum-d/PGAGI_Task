@@ -42,7 +42,7 @@ export default function MakeCall() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg text-center shadow-md">
+    <div className="bg-white p-6 rounded-lg text-center shadow-md w-[60vw] ml-80 mt-36">
       <h3 className="text-xl font-semibold text-gray-800 mb-4">Make a Call</h3>
 
       <div className="mb-6">
